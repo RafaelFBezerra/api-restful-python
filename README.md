@@ -33,16 +33,16 @@ Abaixo estão os endpoints disponíveis na API:
 
 ### Clientes
 
-- `GET /get-client-data`: Buscar dados de um cliente pelo ID.
-- `GET /get-all-client-data`: Buscar todos os dados dos clientes.
-- `POST /insert-client-data`: Inserir um novo cliente na tabela de clientes.
-- `PUT /update-client-data`: Atualizar dados de um cliente na tabela de clientes.
-- `DELETE /delete-client-data`: Excluir um cliente da tabela de clientes.
+- `POST /clients`: Inserir um novo cliente.
+- `GET /clients`: Buscar todos os clientes.
+- `GET /clients/data`: Buscar dados de um cliente específico (busca pelo ID).
+- `PUT /clients`: Atualizar dados de um cliente.
+- `DELETE /clients`: Excluir um cliente.
 
 ### Produtos Favoritos
 
-- `POST /insert-favorite-client-product-data`: Inserir um novo produto favorito na tabela de produtos favoritos.
-- `GET /get-favorite-client-product-data`: Buscar todos os produtos favoritos de um cliente.
+- `POST /products/favorites`: Inserir um novo produto favorito na tabela de produtos favoritos.
+- `GET /products/favorites/by-client`: Buscar todos os produtos favoritos de um cliente.
 
 
 ### Documentação API
