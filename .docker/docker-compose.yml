@@ -1,0 +1,23 @@
+services:
+  api:
+    build:
+      context: ../
+    volumes:
+      - ../:/src
+    ports:
+      - "8000:8000"
+
+  db:
+    image: postgres:18-alpine
+    environment:
+      - POSTGRES_DB=${DB_NAME} 
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+      - ../.docker/create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql
+    ports:
+      - "5432:5432"
+
+volumes:
+  postgres_data:
