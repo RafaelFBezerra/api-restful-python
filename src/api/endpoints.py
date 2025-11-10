@@ -5,8 +5,7 @@ from models.table_models import ProductTable
 from utils.init_db_objects import db_session
 from utils.build_json_responses import responses_builder
 from utils.mappers import API_CONSUMER_PAYLOAD_REQUEST_MAPPER
-from clients.db_client_table import DBClientTable
-from clients.db_product_table import DBProductTable
+from clients.db_client import DBClient
 from schemas.client_table_schemas import InsertClientTable, ReadClientTable, UpdateClientTable, DeleteClientTable
 from schemas.product_table_schemas import InsertProductTable, GetProductTable
 from api.consumer import consume_api_by_id
@@ -15,9 +14,9 @@ from api.consumer import consume_api_by_id
 router = APIRouter()
 
 
-@router.post("/insert-client-data")
+@router.post("/clients")
 async def insert_client_data(request_payload: InsertClientTable, db_session=Depends(db_session)):
-    db_client = DBClientTable(
+    db_client = DBClient(
         table=ClientTable,
         db_session=db_session
     )
@@ -34,9 +33,9 @@ async def insert_client_data(request_payload: InsertClientTable, db_session=Depe
     )
 
 
-@router.get("/get-client-data")
+@router.get("/clients/data")
 async def get_client_data(request_payload: ReadClientTable, db_session=Depends(db_session)):
-    db_client = DBClientTable(
+    db_client = DBClient(
         table=ClientTable,
         db_session=db_session
     ) 
@@ -55,9 +54,9 @@ async def get_client_data(request_payload: ReadClientTable, db_session=Depends(d
     )
 
 
-@router.put("/update-client-data")
+@router.put("/clients")
 async def update_client_data(request_payload: UpdateClientTable, db_session=Depends(db_session)):
-    db_client = DBClientTable(
+    db_client = DBClient(
         table=ClientTable,
         db_session=db_session
     )
@@ -78,9 +77,9 @@ async def update_client_data(request_payload: UpdateClientTable, db_session=Depe
         data=data_return
     )
 
-@router.delete("/delete-client-data")
+@router.delete("/clients")
 async def delete_client_data(request_payload: DeleteClientTable, db_session=Depends(db_session)):
-    db_client = DBClientTable(
+    db_client = DBClient(
         table=ClientTable,
         db_session=db_session
     )
@@ -101,9 +100,9 @@ async def delete_client_data(request_payload: DeleteClientTable, db_session=Depe
     )
 
 
-@router.get("/get-all-client-data")
+@router.get("/clients")
 async def get_all_client_data(db_session=Depends(db_session)):
-    db_client = DBClientTable(
+    db_client = DBClient(
         table=ClientTable,
         db_session=db_session
     )
@@ -117,7 +116,7 @@ async def get_all_client_data(db_session=Depends(db_session)):
     )
 
 
-@router.post("/insert-favorite-client-product-data")
+@router.post("/products/favorites")
 async def insert_favorite_client_product_data(request_payload: InsertProductTable, db_session=Depends(db_session)):
     validate_product_response = consume_api_by_id(request_payload.id_produto)
     if validate_product_response.status_code != 200:
@@ -136,7 +135,7 @@ async def insert_favorite_client_product_data(request_payload: InsertProductTabl
         if str(value).strip() != str(getattr(request_payload, atribute_name)).strip():
             raise HTTPException(status_code=400, detail=f"O atributo [{atribute_name}] com valor [{getattr(request_payload, atribute_name)}] não está em conformidade com o valor [{value}] da API referência!")
 
-    db_client = DBClientTable(
+    db_client = DBClient(
         table=ClientTable,
         db_session=db_session
     )
@@ -148,7 +147,7 @@ async def insert_favorite_client_product_data(request_payload: InsertProductTabl
 
         raise HTTPException(status_code=status_code, detail=status_messsage)
 
-    db_product = DBProductTable(
+    db_product = DBClient(
         table=ProductTable,
         db_session=db_session
     )
@@ -165,14 +164,14 @@ async def insert_favorite_client_product_data(request_payload: InsertProductTabl
     )
 
 
-@router.get("/get-all-favorite-products-by-client-id")
+@router.get("/products/favorites/by-client")
 async def get_all_favorite_products_by_client_id(request_payload: GetProductTable, db_session=Depends(db_session)):
-    db_client = DBClientTable(
+    db_client = DBClient(
         table=ClientTable,
         db_session=db_session
     )
     
-    db_product = DBProductTable(
+    db_product = DBClient(
         table=ProductTable,
         db_session=db_session
     )

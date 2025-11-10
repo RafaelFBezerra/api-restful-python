@@ -13,6 +13,9 @@ services:
       - POSTGRES_DB=${DB_NAME} 
       - POSTGRES_USER=${DB_USER}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_HOST=${DB_HOST}
+      - POSTGRES_PORT=${DB_PORT}
+      - TOKEN_REQUEST=${TOKEN_REQUEST}
     volumes:
       - postgres_data:/var/lib/postgresql/data/
       - ../.docker/create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql
